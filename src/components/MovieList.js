@@ -1,56 +1,65 @@
 import React from "react";
-//import Movie from "./Movie";
-import { Card, CardGroup } from "react-bootstrap";
-// import ModalMovie from "./ModalMovie";
+import Movie from "./Movie";
+import { Card, CardGroup, Button } from "react-bootstrap";
+import { useState } from "react";
+import ModalMovie from "./ModalMovie";
 
+function MovieList(props) {
+  // looping through the fetched data
+  const [showModal, setShowModal] = useState(false);
+  const [move, setMove] = useState(props);
 
-
-function MoviesList(props) {
-  // const [showModal, setShowModal] = useState(false);
   return (
-      <>
-          <CardGroup style={{ display: "flex", justifyContent: "space-around" }}>
-              {
-                  props.trending.map(trend => {
-                      return <div key={trend.id}>
-                          <Card key={trend.id} >
-                              <Card.Body>
-                                  <Card.Title>{trend.title}</Card.Title>
-                              </Card.Body>
-                          </Card>
-                      </div>
-                  })
-              }
-          </CardGroup>
-          {/* {showModal && <ModalMovie show={showModal} meme={meme} handleColse={() => { setShowModal(false) }} updateCaption={props.updateCaption} />} */}
-      </>
-  )
+    <>
+      <CardGroup
+        style={{
+          display: "flex",
+          justifyContent: "space-around",
+          width: "200rem",
+          height: "20rem",
+        }}
+      >
+        {props.trending &&
+          props.trending.map((trend) => {
+            return (
+              <Card>
+                <Card.Img
+                  variant="top"
+                  src={`https://image.tmdb.org/t/p/w500/${trend.poster_path}`}
+                />
+                <Card.Body>
+                  <Card.Title>{trend.title}</Card.Title>
+                  <Card.Text></Card.Text>
+                  <Button
+                    variant="primary"
+                    onClick={() => {
+                      setMove(move);
+                      setShowModal(true);
+                    }}
+                  >
+                    Show Modal
+                  </Button>
+                  <Button variant="dark">add to Favourite</Button>
+                </Card.Body>
+              </Card>
+            );
+          })}
+      </CardGroup>
+      {showModal && (
+        <ModalMovie
+          showModal={showModal}
+          move={move}
+          handleColse={() => {
+            setShowModal(false);
+          }}
+          updateCaption={props.updateCaption}
+        />
+      )}
+
+      <Movie />
+    </>
+  );
 }
 
-export default MoviesList;
+export default MovieList;
 
-// function MovieList(props) {
-//   // looping through the fetched data
-
-
-//    return (
-//     <>
-//        <CardGroup>
-//          {props.trending.map((trend) => {
-//         return (
-//             <div>
-//               <Card>
-//                 <Card.Body>
-//                   <Card.Title>{trend.title}</Card.Title>
-//                   <Card.Text></Card.Text>
-//                 </Card.Body>
-//               </Card>
-//             </div>
-//           );
-//         })}
-//       </CardGroup> 
-//    </>
-//   );
-// }
-
-// export default MovieList;
