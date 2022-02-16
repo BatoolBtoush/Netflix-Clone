@@ -29,7 +29,9 @@ function MovieList(props) {
                 />
                 <Card.Body>
                   <Card.Title>{trend.title}</Card.Title>
-                  <Card.Text></Card.Text>
+                  <Card.Text>
+                 {trend.caption ? trend.caption : "No Caption Added"}
+                  </Card.Text>
                   <Button
                     variant="primary"
                     onClick={() => {
@@ -39,7 +41,6 @@ function MovieList(props) {
                   >
                     Show Modal
                   </Button>
-                  <Button variant="dark">add to Favourite</Button>
                 </Card.Body>
               </Card>
             );
@@ -49,7 +50,7 @@ function MovieList(props) {
         <ModalMovie
           showModal={showModal}
           move={move}
-          handleColse={() => {
+          handleClose={() => {
             setShowModal(false);
           }}
           updateCaption={props.updateCaption}
