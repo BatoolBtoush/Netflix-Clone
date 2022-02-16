@@ -1,6 +1,8 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import MovieList from "./MovieList";
+// import { Container, Row } from "react-bootstrap";
+
 
 
 
@@ -17,7 +19,7 @@ function Home() {
       const response = await fetch(`https://movieslibrary-batool.herokuapp.com/trending`);
       console.log(response);
       const dataConvertToJson = await response.json();
-      console.log(dataConvertToJson);
+      // console.log(dataConvertToJson);
       setTrending(dataConvertToJson); //now the trending contains the data i got it from the backend
     } catch (error) {
       console.log(error);
@@ -31,7 +33,7 @@ function Home() {
   return ( //rendering or returning
     <>
       <h1>home</h1>
-      <MovieList x={trending} /> 
+      <MovieList trending={trending} /> 
     </>
   );
 }
