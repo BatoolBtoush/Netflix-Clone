@@ -11,7 +11,7 @@ function Home() {
     //function for fetching data
     try {
       const response = await fetch(
-        `https://movieslibrary-batool.herokuapp.com/trending`
+        `${process.env.REACT_APP_SERVER}/trending`
       );
       console.log(response);
       const dataConvertToJson = await response.json();
@@ -21,6 +21,17 @@ function Home() {
       console.log(error);
     }
   };
+
+  const updateCaption = (data, id) => {
+    let updatedCap = trending.map(battrend => {
+        if (battrend.id === id) {
+          battrend.caption = data.userCaption;
+            return battrend;
+        }
+        else return battrend;
+    })
+    setTrending(updatedCap)
+}
 
   useEffect(() => {
     //the first thing to be executed
@@ -32,7 +43,8 @@ function Home() {
     <>
       <h1>home</h1>
 
-      <MovieList trending={trending} />
+      <MovieList trending={trending} updateCaption={updateCaption} />
+    
     </>
   );
 }

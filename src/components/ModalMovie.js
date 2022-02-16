@@ -3,14 +3,42 @@ import { Form, Modal, Button } from "react-bootstrap";
 import { useRef } from "react";
 
 function ModalMovie(props) {
+
+
   const commentRef = useRef();
   function handleCaption(bat) {
-    bat.preventDefault();
+    bat.preventDefault()
     const userCaption = commentRef.current.value;
+    ;
     const newData = { ...props.move, userCaption };
     props.updateCaption(newData, props.move.id);
   }
 
+
+  async function addToFavList(move) {
+    try {
+      const res = await fetch(`${process.env.REACT_APP_SERVER}/addMovie`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: move.title,
+          poster_path: move.poster_path,
+        }),
+      });
+      const data = await res.json();
+      console.log(data)
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+
+
+
+
+  
   return (
     <>
       <Modal
@@ -24,7 +52,8 @@ function ModalMovie(props) {
         <Modal.Header closeButton>
           <Modal.Title>{props.move.title}</Modal.Title>
         </Modal.Header>
-        <Modal.Body></Modal.Body>
+        <Modal.Body>
+        </Modal.Body>
         <Modal.Footer>
           <Form.Group>
             <Form.Label>Comment:</Form.Label>
@@ -47,6 +76,7 @@ function ModalMovie(props) {
           <Button variant="secondary" onClick={props.handleClose}>
             Close
           </Button>
+          <Button variant="primary" onClick={()=> addToFavList(props.move)}>add to FavList</Button>
         </Modal.Footer>
       </Modal>
       ;
